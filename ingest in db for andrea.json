@@ -1,0 +1,1719 @@
+{
+  "name": "ingest in db for andrea",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ingest_in_db",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        560
+      ],
+      "id": "1ca7c6c6-2076-4b50-bbe9-72c7ff2d78b3",
+      "name": "Webhook",
+      "webhookId": "9c819a1a-5b7f-455f-9748-6e15d5fc40ea"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.type }}",
+                    "rightValue": "new client email",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "416ef365-f5ec-4979-a214-7f40f240e0da"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "22c49699-0110-4db1-984f-d1e80e2858fa",
+                    "leftValue": "={{ $json.body.type }}",
+                    "rightValue": "new project",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bb69b778-3493-4db4-b176-7cca3757cc9d",
+                    "leftValue": "={{ $json.body.type }}",
+                    "rightValue": "Reply to client email ",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6246eb0a-a327-4a40-8cc1-e05dfaaa03a2",
+                    "leftValue": "={{ $json.body.type }}",
+                    "rightValue": "Itinerary Blueprint",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "26f56c01-84e4-4b61-b70b-fc89c79bb5d0",
+                    "leftValue": "={{ $json.body.type }}",
+                    "rightValue": "call transcript",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "48713ce8-1bf6-429e-ada0-c241e4b2d084",
+                    "leftValue": "={{ $json.body.type }}",
+                    "rightValue": "Itinerary",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "72f1657a-c827-406c-b622-b67ca7a56eff",
+                    "leftValue": "={{ $json.body.type }}",
+                    "rightValue": "Supplier Email",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        224,
+        480
+      ],
+      "id": "9e502155-15e6-4862-87e9-1f3690330bee",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2240,
+        -640
+      ],
+      "id": "78ca96fa-b265-46ea-b5fa-70e7d5696f44",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2320,
+        64
+      ],
+      "id": "cfee1353-b21d-4eeb-ab8f-75636e4741a2",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "blueflower_database_",
+          "mode": "list",
+          "cachedResultName": "blueflower_database_"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        1840,
+        -144
+      ],
+      "id": "0fa9fb4a-1bc3-4e5b-a852-38b4e1778749",
+      "name": "Qdrant Vector Store2",
+      "credentials": {
+        "qdrantApi": {
+          "id": "pwyF3GDQ0GElEapD",
+          "name": "QdrantApi account ali"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1824,
+        80
+      ],
+      "id": "583ff733-ac00-40e6-9b55-45b6fde49c7e",
+      "name": "Embeddings OpenAI6",
+      "credentials": {
+        "openAiApi": {
+          "id": "dTmr2fo8YYQRqIzg",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "=Destination: {{ $json.body.destination }}\nIntent: {{ $json.body['client intent'] }} \nPreferences: {{ $json.body['client preferences'] }}\nBudget: {{ $json.body.budget }}\nTravel Dates: {{ $json.body['travel dates'] }}\n",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "type",
+                "value": "project"
+              },
+              {
+                "name": "client_id",
+                "value": "={{ $json.body.client_id }}"
+              },
+              {
+                "name": "project_id",
+                "value": "={{ $json.body.project_id }}"
+              },
+              {
+                "name": "client name",
+                "value": "={{ $json.body['client name'] }}"
+              },
+              {
+                "name": "destination",
+                "value": "={{ $json.body.destination }}"
+              },
+              {
+                "name": "budget",
+                "value": "={{ $json.body.budget }}"
+              },
+              {
+                "name": "Number_of_travellers",
+                "value": "={{ $json.body['number of travelers'] }}"
+              },
+              {
+                "name": "Travel Date",
+                "value": "={{ $json.body['travel dates'] }}"
+              },
+              {
+                "name": "Project Status",
+                "value": "={{ $json.body.status }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1952,
+        80
+      ],
+      "id": "259ee135-1114-4e3b-be8a-b3980058fe9e",
+      "name": "Default Data Loader5"
+    },
+    {
+      "parameters": {
+        "separator": "\\n\\n",
+        "chunkOverlap": 100
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        2032,
+        288
+      ],
+      "id": "c30dbc17-648c-4ada-a39c-b3e42ebb7783",
+      "name": "Character Text Splitter3"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "blueflower_database_",
+          "mode": "list",
+          "cachedResultName": "blueflower_database_"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        1760,
+        -848
+      ],
+      "id": "50b04d5e-bd66-4327-b416-ce7f6e8f27c3",
+      "name": "Qdrant Vector Store4",
+      "credentials": {
+        "qdrantApi": {
+          "id": "pwyF3GDQ0GElEapD",
+          "name": "QdrantApi account ali"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1744,
+        -624
+      ],
+      "id": "279f6b22-12ef-446b-9e17-658655a0b5dc",
+      "name": "Embeddings OpenAI7",
+      "credentials": {
+        "openAiApi": {
+          "id": "dTmr2fo8YYQRqIzg",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "=Email details:\nSubject: {{ $json.body['email subject'] }}\nEmail Body: {{ $json.body['email body'] }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "type",
+                "value": "={{ $json.body.type || null }}"
+              },
+              {
+                "name": "client_id",
+                "value": "={{ $json.body.client_id|| null  }}"
+              },
+              {
+                "name": "project_id",
+                "value": "={{ $json.body.project_id || null }}"
+              },
+              {
+                "name": "email_id",
+                "value": "={{ $json.body.email_id || null }}"
+              },
+              {
+                "name": "thread_id",
+                "value": "={{ $json.body.thread_id || null }}"
+              },
+              {
+                "name": "client email",
+                "value": "={{ $json.body['sender email'] || null }}"
+              },
+              {
+                "name": "timestamp",
+                "value": "={{ $json.body.timestamp || null }}"
+              },
+              {
+                "name": "subject",
+                "value": "={{ $json.body['email subject'] || null }}"
+              },
+              {
+                "name": "client name",
+                "value": "={{ $json.body['client name'] || null }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1872,
+        -624
+      ],
+      "id": "88e1cec7-47d7-4b09-a4c0-a4cf769d01db",
+      "name": "Default Data Loader4"
+    },
+    {
+      "parameters": {
+        "separator": "\\n\\n",
+        "chunkOverlap": 100
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1968,
+        -416
+      ],
+      "id": "e5c10067-bc97-474a-87a5-62e9e71efacb",
+      "name": "Character Text Splitter5"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2352,
+        800
+      ],
+      "id": "c94e6552-4865-4a3d-a4ce-e3e5148b4664",
+      "name": "Respond to Webhook3"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "blueflower_database_",
+          "mode": "list",
+          "cachedResultName": "blueflower_database_"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        1872,
+        608
+      ],
+      "id": "3a3e0192-c6ae-44e9-aaa8-8b09f759e6e3",
+      "name": "Qdrant Vector Store",
+      "credentials": {
+        "qdrantApi": {
+          "id": "pwyF3GDQ0GElEapD",
+          "name": "QdrantApi account ali"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1872,
+        832
+      ],
+      "id": "e4e379da-038e-41d2-a667-535d50a5d64e",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "dTmr2fo8YYQRqIzg",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "=AI Reply to Client Email: \nEmail Subject: {{ $('Switch').item.json.body.subject }}\nEmail Body: {{ $('Switch').item.json.body['ai reply'] }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "type",
+                "value": "={{ $('Switch').item.json.body.type }}"
+              },
+              {
+                "name": "project_id",
+                "value": "={{ $('Switch').item.json.body.project_id }}"
+              },
+              {
+                "name": "client_id",
+                "value": "={{ $('Switch').item.json.body.clien_id }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1984,
+        832
+      ],
+      "id": "6f3c8df3-dd15-42a0-b25c-e4a865e80cda",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "separator": "\\n\\n",
+        "chunkOverlap": 100
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        2064,
+        1024
+      ],
+      "id": "5c9b3761-2b3b-455b-80fe-454a21e2beb5",
+      "name": "Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "blueflower_database_",
+          "mode": "list",
+          "cachedResultName": "blueflower_database_"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        1888,
+        1280
+      ],
+      "id": "9802f42e-fa57-4f5e-84d3-13ce3e40fb70",
+      "name": "Qdrant Vector Store5",
+      "credentials": {
+        "qdrantApi": {
+          "id": "pwyF3GDQ0GElEapD",
+          "name": "QdrantApi account ali"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1888,
+        1504
+      ],
+      "id": "ade09a42-3f0a-4f1e-b4b0-e973d08dd038",
+      "name": "Embeddings OpenAI8",
+      "credentials": {
+        "openAiApi": {
+          "id": "dTmr2fo8YYQRqIzg",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "=Itinerary Blueprint: {{ $('Switch').item.json.body.blueprint }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "type",
+                "value": "Itinerary Blueprint"
+              },
+              {
+                "name": "project id",
+                "value": "={{ $('Switch').item.json.body['project id'] }}"
+              },
+              {
+                "name": "client id",
+                "value": "={{ $('Switch').item.json.body['client id'] }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        1504
+      ],
+      "id": "02c0abf2-bbec-4c9e-9078-675a050b2cf3",
+      "name": "Default Data Loader6"
+    },
+    {
+      "parameters": {
+        "separator": "\\n\\n",
+        "chunkSize": 1500,
+        "chunkOverlap": 100
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        1712
+      ],
+      "id": "7639b5fc-b0b7-4174-9bb6-d56ae3ad3a58",
+      "name": "Character Text Splitter6"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2368,
+        1488
+      ],
+      "id": "d5ef72b3-1538-4bc5-b7c8-4296064879c7",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2400,
+        1984
+      ],
+      "id": "bd06f90b-9b67-48ab-b51f-0a33db404356",
+      "name": "Respond to Webhook4"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "blueflower_database_",
+          "mode": "list",
+          "cachedResultName": "blueflower_database_"
+        },
+        "embeddingBatchSize": "=200",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        1920,
+        1984
+      ],
+      "id": "783fe30b-3b07-459e-824a-ed331088d826",
+      "name": "Qdrant Vector Store6",
+      "credentials": {
+        "qdrantApi": {
+          "id": "pwyF3GDQ0GElEapD",
+          "name": "QdrantApi account ali"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1872,
+        2272
+      ],
+      "id": "f135ebe0-929a-44b2-a468-cb1d2169e297",
+      "name": "Embeddings OpenAI9",
+      "credentials": {
+        "openAiApi": {
+          "id": "dTmr2fo8YYQRqIzg",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "=Call transcript: \n{{ $('Switch').item.json.body['call transcript'] }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "type",
+                "value": "Call Transcript"
+              },
+              {
+                "name": "client id",
+                "value": "={{ $('Switch').item.json.body['client id'] }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        2032,
+        2208
+      ],
+      "id": "6165170e-2f94-44cd-8f53-107d6248e0ec",
+      "name": "Default Data Loader7"
+    },
+    {
+      "parameters": {
+        "separator": "\\n\\n",
+        "chunkSize": 1500,
+        "chunkOverlap": 100
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        2128,
+        2400
+      ],
+      "id": "363623f9-1c3f-40d3-a831-247d2cf16ce8",
+      "name": "Character Text Splitter7"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "convert-to-pdf",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1744,
+        3488
+      ],
+      "id": "899d5a70-262d-4128-af64-d9d0393b3a8e",
+      "name": "Webhook1",
+      "webhookId": "5114af47-04e4-450f-9fde-fa12fddaa181"
+    },
+    {
+      "parameters": {
+        "mode": "markdownToHtml",
+        "markdown": "={{ $json.body.content }}",
+        "options": {
+          "headerLevelStart": 1,
+          "smartIndentationFix": true
+        }
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        -1488,
+        3488
+      ],
+      "id": "94781764-e277-41e6-89b1-c185470c6930",
+      "name": "convert response in markdown format"
+    },
+    {
+      "parameters": {
+        "jsCode": "const content = $input.first().json.data;  // assuming 'html' is from Markdown node\n\nconst fullHTML = `\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <title>Travel Blueprint</title>\n  <style>\n    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 40px; color: #333; }\n    h1, h2, h3 { color: #222; }\n    em { color: #555; }\n    hr { margin: 30px 0; border-top: 1px solid #ccc; }\n  </style>\n</head>\n<body>\n  ${content}\n</body>\n</html>\n`;\n\nreturn [{ json: { html: fullHTML } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1248,
+        3488
+      ],
+      "id": "67b4097d-da20-4d91-8432-1a844e977d57",
+      "name": "add doctype"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.html2pdf.app/v1/generate",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "apiKey",
+              "value": "njkR5CqDzONsWyebaa9v4zPY2hWhaGQ0NCXtTSgliyPk25Pj7Rma1DlYyibS3hR1"
+            },
+            {
+              "name": "html",
+              "value": "={{ $json.html }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1040,
+        3488
+      ],
+      "id": "84863cfd-bcc1-4188-93d8-a31cae07c745",
+      "name": "request to convert into pdf"
+    },
+    {
+      "parameters": {
+        "name": "=Blueprint for {{ $('Webhook1').item.json.body['client id'] }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1wiMNKThhAX5G9S9vlw13Py4pn7uu3k0s",
+          "mode": "list",
+          "cachedResultName": "blueprints",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1wiMNKThhAX5G9S9vlw13Py4pn7uu3k0s"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -576,
+        3648
+      ],
+      "id": "ccb97871-34f8-41a8-9c81-9b89d3c50df4",
+      "name": "upload file to drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Rw3v033TQ3k7OAZ3",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"id\": \"{{ $json.id }}\",\n  \"link\": \"{{ $json.webViewLink }}\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -368,
+        3488
+      ],
+      "id": "a1ac4f08-0315-4384-aa22-595829d70f02",
+      "name": "Respond to Webhook5"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook1').item.json.body.type }}",
+                    "rightValue": "itinerary",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "bf3ae74f-34b1-4a39-991f-95dca83b6a75"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2456dbe2-98d2-49bc-a9f0-6725267d925b",
+                    "leftValue": "={{ $('Webhook1').item.json.body.type }}",
+                    "rightValue": "blueprint",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -816,
+        3488
+      ],
+      "id": "b60da33d-76b0-46b9-8b4c-14d105d244be",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "name": "=Itinerary for {{ $('Webhook1').item.json.body['client id'] }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1Q9eh3dlnWwQdev_WqqIFScZB0S989Wlt",
+          "mode": "list",
+          "cachedResultName": "itineraries",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1Q9eh3dlnWwQdev_WqqIFScZB0S989Wlt"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -576,
+        3344
+      ],
+      "id": "dd4ae35a-730f-4a5e-961b-e51b1c1d2f17",
+      "name": "upload file to drive1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Rw3v033TQ3k7OAZ3",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2432,
+        2640
+      ],
+      "id": "1c538dbd-3944-4b2a-8c60-d3c2234cf60d",
+      "name": "Respond to Webhook6"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "blueflower_database_",
+          "mode": "list",
+          "cachedResultName": "blueflower_database_"
+        },
+        "embeddingBatchSize": "=200",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        1952,
+        2640
+      ],
+      "id": "36772c23-88fb-4b87-be2f-a79fd898e008",
+      "name": "Qdrant Vector Store7",
+      "credentials": {
+        "qdrantApi": {
+          "id": "pwyF3GDQ0GElEapD",
+          "name": "QdrantApi account ali"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1888,
+        2928
+      ],
+      "id": "c32b194f-7a13-4ea1-a7e8-808a88197bc2",
+      "name": "Embeddings OpenAI10",
+      "credentials": {
+        "openAiApi": {
+          "id": "dTmr2fo8YYQRqIzg",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "separator": "\\n\\n",
+        "chunkSize": 1500,
+        "chunkOverlap": 100
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        2064,
+        3024
+      ],
+      "id": "d0e76601-87d0-449f-9259-2fefe2076ce2",
+      "name": "Character Text Splitter8"
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "=Itinerary: {{ $('Switch').item.json.body.itinerary }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "type",
+                "value": "Itinerary Blueprint"
+              },
+              {
+                "name": "project id",
+                "value": "={{ $('Switch').item.json.body['project id'] }}"
+              },
+              {
+                "name": "client id",
+                "value": "={{ $('Switch').item.json.body['client id'] }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        2864
+      ],
+      "id": "47677155-9fdd-4ddf-ad43-9264a13aeb94",
+      "name": "Default Data Loader9"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2352,
+        3552
+      ],
+      "id": "f89e6f0d-d2cb-4495-a6bf-658ff0df35da",
+      "name": "Respond to Webhook7"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "blueflower_database_",
+          "mode": "list",
+          "cachedResultName": "blueflower_database_"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        1872,
+        3344
+      ],
+      "id": "6742ed63-aeff-48f0-a398-c88ac1ee6c80",
+      "name": "Qdrant Vector Store1",
+      "credentials": {
+        "qdrantApi": {
+          "id": "pwyF3GDQ0GElEapD",
+          "name": "QdrantApi account ali"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1872,
+        3568
+      ],
+      "id": "ed7eb0fe-f2c1-44b5-b77d-6b3e324369b4",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "dTmr2fo8YYQRqIzg",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "=AI Reply to Client Email: \nEmail Subject: {{ $('Switch').item.json.body.subject }}\nEmail Body: {{ $('Switch').item.json.body['ai reply'] }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "type",
+                "value": "={{ $('Switch').item.json.body.type }}"
+              },
+              {
+                "name": "project_id",
+                "value": "={{ $('Switch').item.json.body.project_id }}"
+              },
+              {
+                "name": "client_id",
+                "value": "={{ $('Switch').item.json.body.client_id }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1984,
+        3568
+      ],
+      "id": "f179ccba-1bf4-4e51-b5b0-90c08d744daa",
+      "name": "Default Data Loader1"
+    },
+    {
+      "parameters": {
+        "separator": "\\n\\n",
+        "chunkOverlap": 100
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        2064,
+        3760
+      ],
+      "id": "ef518cda-91f1-406d-ad4d-0a03831ec02e",
+      "name": "Character Text Splitter1"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "aiagents.app.n8n.cloud",
+            "user-agent": "axios/1.8.2",
+            "content-length": "264",
+            "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
+            "accept-encoding": "gzip, br",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "4.182.64.75",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "DE",
+            "cf-ray": "975b1889f0919a35-FRA",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json",
+            "x-forwarded-for": "4.182.64.75, 162.158.86.203",
+            "x-forwarded-host": "aiagents.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-55-69f456d475-s7glq",
+            "x-is-trusted": "yes",
+            "x-real-ip": "4.182.64.75"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "type": "Supplier Email",
+            "subject": "Propsal Required",
+            "ai reply": "Hi,\nWe need proposal for the below itinerary. \nItinerary: https://drive.google.com/file/d/1qiu8mV0dUPOoE0WCYbmX3c9\\_5B-G6I09/view?usp=drivesdk\n",
+            "project_id": "PRJ-96571",
+            "client_id": "CLI-96571"
+          },
+          "webhookUrl": "https://aiagents.app.n8n.cloud/webhook/ingest_in_db",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Qdrant Vector Store2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Qdrant Vector Store5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Qdrant Vector Store6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Qdrant Vector Store7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Qdrant Vector Store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI6": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store2",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader5": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store2",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter3": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader5",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook1": {
+      "main": [
+        []
+      ]
+    },
+    "Embeddings OpenAI7": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store4",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader4": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store4",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter5": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader4",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "Qdrant Vector Store4": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI8": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store5",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader6": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store5",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter6": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader6",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store5": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI9": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store6",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader7": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store6",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter7": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader7",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store6": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "convert response in markdown format": {
+      "main": [
+        [
+          {
+            "node": "add doctype",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add doctype": {
+      "main": [
+        [
+          {
+            "node": "request to convert into pdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "request to convert into pdf": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "convert response in markdown format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "upload file to drive": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "upload file to drive1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "upload file to drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "upload file to drive1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store7": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI10": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store7",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter8": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader9",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader9": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store7",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store1",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter1": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader1",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2355a0d5-ba4f-4a0d-af2d-bd91741f5325",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f644d820de3ea84e558b3c1a9011167af507d460ba75d1147a2a188babfa1150"
+  },
+  "id": "sjaeJT9gNrgQRwyT",
+  "tags": []
+}

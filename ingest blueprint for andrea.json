@@ -1,0 +1,733 @@
+{
+  "name": "ingest blueprint for andrea",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "id": "4948784d-f0da-47d0-bfff-9a6bc1f0f06f",
+      "name": "Extract PDF Text",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2784,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "id": "b8a5618c-6f80-4819-88ae-0c32a6cd9024",
+      "name": "Download File1",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2528,
+        -160
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Rw3v033TQ3k7OAZ3",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chunkSize": 2000,
+        "chunkOverlap": 200,
+        "options": {
+          "splitCode": "markdown"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        3840,
+        48
+      ],
+      "id": "8f8c96b4-6378-494d-9344-4573f5c013f8",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        3664,
+        0
+      ],
+      "id": "baed7a95-8af6-42c6-92ee-1d371d383411",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "dTmr2fo8YYQRqIzg",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Watch Trigger (Drive) - Files Created\n## Files created in a specific folder -> Check file type and do conversion if necessary -> Extract the text -> Add to Vector Store\nDrive/Private AI - RAG",
+        "height": 740,
+        "width": 2660,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1664,
+        -496
+      ],
+      "typeVersion": 1,
+      "id": "726f5ce1-c77a-47a9-8d9d-c7242920fd41",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2224,
+        -208
+      ],
+      "id": "5cb26acf-8a34-4852-95ab-4c48ddd61e3b",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.chunk_text }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "=type",
+                "value": "=blueprint"
+              },
+              {
+                "name": "=client_name",
+                "value": "={{ $('get metadata').item.json.client_name }}"
+              },
+              {
+                "name": "=subject",
+                "value": "={{ $('get metadata').item.json.subject }}"
+              },
+              {
+                "name": "=date",
+                "value": "={{ $('get metadata').item.json.date }}"
+              },
+              {
+                "name": "file_name",
+                "value": "={{ $('get metadata').item.json.file_name }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "6d21134b-6f92-4dd5-ae6c-6b5aacd54f09",
+      "name": "Enhanced Default Data Loader1",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        3760,
+        -128
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "blueflower_database_",
+          "mode": "list",
+          "cachedResultName": "blueflower_database_"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        3600,
+        -320
+      ],
+      "id": "3f59548e-75b7-40c5-b8c5-5df1d3e34f1a",
+      "name": "Qdrant Vector Store2",
+      "credentials": {
+        "qdrantApi": {
+          "id": "pwyF3GDQ0GElEapD",
+          "name": "QdrantApi account ali"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $json.text;\n\nfunction extractField(pattern, fallback = null) {\n  const match = text.match(pattern);\n  return match ? match[1].trim() : fallback;\n}\n\nreturn {\n  full_text: text,\n  client_name: extractField(/Dear\\s+([A-Za-z\\s&]+),/),\n  subject: extractField(/Subject:\\s*(.*)/),\n  date: extractField(/Date:\\s*(.*)/),\n  file_name: $json.info?.Title || \"unknown\",\n  creator: $json.info?.Creator || \"unknown\"\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2992,
+        -160
+      ],
+      "id": "3e09e8e1-6fcd-425d-8a02-47c795e7277c",
+      "name": "get metadata"
+    },
+    {
+      "parameters": {
+        "jsCode": "const fullText = $json.full_text;\nconst chunks = fullText.split(/\\n(?=Hotels|The Journey I Envision|Other Experiences|Next Steps)/);\n\nreturn chunks.map((chunk, index) => ({\n  json: {\n    chunk_text: chunk.trim(),\n    section: chunk.includes('Hotels') ? 'Hotels' :\n             chunk.includes('The Journey') ? 'Itinerary' :\n             chunk.includes('Other Experiences') ? 'Experiences' :\n             chunk.includes('Next Steps') ? 'Next Steps' : 'Intro',\n    index: index\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3232,
+        -160
+      ],
+      "id": "5d0cd550-3503-4ca5-bd2b-22563fe7a04e",
+      "name": "chunk the full text"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "='1h2UBsPjZ4uYslDL-deChwcpkp45ZYI71' in parents and mimeType='application/pdf' and trashed=false",
+        "returnAll": true,
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1984,
+        -208
+      ],
+      "id": "dad47394-533f-45ea-8928-76faedd29000",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Rw3v033TQ3k7OAZ3",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        1824,
+        720
+      ],
+      "id": "d5bbbb0a-6f7f-4fab-a4ef-154b657b8cfe",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "id": "72e5f939-83ce-486c-be89-129205dc93e0",
+      "name": "Extract PDF Text1",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2480,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "id": "9aee1035-ca4d-4141-bd80-adb5bfc8af72",
+      "name": "Download File",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2240,
+        720
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Rw3v033TQ3k7OAZ3",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chunkSize": 1500,
+        "chunkOverlap": 200,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        3872,
+        960
+      ],
+      "id": "42be5227-cb08-434a-8a3e-9c778a67d3fa",
+      "name": "Recursive Character Text Splitter1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        3680,
+        928
+      ],
+      "id": "78cef822-01ff-4538-ac9e-d997bdde0c17",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "dTmr2fo8YYQRqIzg",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Watch Trigger (Drive) - Files Created\n## Files created in a specific folder -> Check file type and do conversion if necessary -> Extract the text -> Add to Vector Store\nDrive/Private AI - RAG",
+        "height": 740,
+        "width": 2660,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1680,
+        432
+      ],
+      "typeVersion": 1,
+      "id": "f118c7fe-a4f9-4f69-b9c5-37293f589d57",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "=Email Body: {{ $json.content }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "=type",
+                "value": "=reply_to_client_queries"
+              },
+              {
+                "name": "=client_name",
+                "value": "={{ $json.client_name }}"
+              },
+              {
+                "name": "=region",
+                "value": "={{ $json.region }}"
+              },
+              {
+                "name": "=trip_type",
+                "value": "={{ $json.trip_type }}"
+              },
+              {
+                "name": "travel_style",
+                "value": "={{ $json.travel_style }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "ddc17cc8-a797-4741-b3cc-8b754d805758",
+      "name": "Enhanced Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        3792,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "blueflower_database_",
+          "mode": "list",
+          "cachedResultName": "blueflower_database_"
+        },
+        "embeddingBatchSize": "=200",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.1,
+      "position": [
+        3792,
+        544
+      ],
+      "id": "f0b79cc3-90fc-4318-99ff-bdce4a0c2082",
+      "name": "Qdrant Vector Store",
+      "credentials": {
+        "qdrantApi": {
+          "id": "pwyF3GDQ0GElEapD",
+          "name": "QdrantApi account ali"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $json[\"text\"];\nconst chunks = text.split(/Dear\\s[A-Z][a-z]+,/g); // crude split on email openings\nconst matches = text.match(/Dear\\s[A-Z][a-z]+,/g); // capture the headers\n\nconst output = [];\n\nfor (let i = 0; i < chunks.length; i++) {\n  if (!chunks[i].trim()) continue;\n\n  output.push({\n    json: {\n      email_header: matches?.[i - 1] ?? \"Unknown\",\n      content: chunks[i].trim(),\n    }\n  });\n}\n\nreturn output;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2704,
+        720
+      ],
+      "id": "cbc60608-70e0-4375-8924-c0832e53783e",
+      "name": "chunk the full text1"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "='17invfZA8ctaz87hZD9r73meaYwQhJ46J' in parents and trashed = false\n",
+        "returnAll": true,
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2000,
+        720
+      ],
+      "id": "a26742cb-a3a9-4a84-a948-57108130f119",
+      "name": "Google Drive1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Rw3v033TQ3k7OAZ3",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "17invfZA8ctaz87hZD9r73meaYwQhJ46J",
+          "mode": "list",
+          "cachedResultName": "first responder",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/17invfZA8ctaz87hZD9r73meaYwQhJ46J"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        1040
+      ],
+      "id": "80972cd5-a51f-444f-853f-02d4f5ffe891",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Rw3v033TQ3k7OAZ3",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map((item, index) => {\n  const content = item.json.content;\n  const header = item.json.email_header;\n  const client = header.replace(/Dear\\s+|\\,$/g, '').trim();\n\n  const region = content.includes(\"Japan\") ? \"Japan\"\n               : content.includes(\"Philippines\") ? \"Philippines\"\n               : content.includes(\"Southeast Asia\") ? \"Southeast Asia\"\n               : content.includes(\"Costa Rica\") ? \"Costa Rica\"\n               : \"Unknown\";\n\n  const trip_type = content.includes(\"family\") ? \"family\"\n                  : content.includes(\"couples\") || content.includes(\"husband\") ? \"couple\"\n                  : content.includes(\"friends\") ? \"friends\"\n                  : \"solo\";\n\n  return {\n    json: {\n      client_name: client,\n      content,\n      region,\n      trip_type,\n      travel_style: [\"non-touristy\", \"tailored\", \"cultural\"],\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2912,
+        720
+      ],
+      "id": "7ca47b65-7912-410b-842e-f1efe417eeef",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3120,
+        720
+      ],
+      "id": "e2ea5305-01f3-428b-b9b5-98449b1325bb",
+      "name": "Loop Over Items1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Extract PDF Text": {
+      "main": [
+        [
+          {
+            "node": "get metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File1": {
+      "main": [
+        [
+          {
+            "node": "Extract PDF Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        []
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        []
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Download File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enhanced Default Data Loader1": {
+      "ai_document": [
+        []
+      ]
+    },
+    "get metadata": {
+      "main": [
+        [
+          {
+            "node": "chunk the full text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "chunk the full text": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract PDF Text1": {
+      "main": [
+        [
+          {
+            "node": "chunk the full text1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Extract PDF Text1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "chunk the full text1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive1": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enhanced Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter1": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Enhanced Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "63cb0b77-66cd-451d-a9d8-0fc9b4a634ff",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f644d820de3ea84e558b3c1a9011167af507d460ba75d1147a2a188babfa1150"
+  },
+  "id": "meUkYGEz9TX274vj",
+  "tags": []
+}
